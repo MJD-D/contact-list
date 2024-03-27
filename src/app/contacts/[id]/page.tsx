@@ -1,14 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams,} from 'next/navigation';
 import useContacts from '../../stateHooks/UseContacts';
 import ContactCard from '../../components/ContactCard';
+import  '../../styles/contactCard.module.css';
+import { Contact } from '@/app/contact';
+
 
 const ContactCardPage = () => {
-  const id = useParams<{id:string}>();
-  const { contacts } = useContacts();
-  const contact = contacts.find(c => c.id === id.id);
+  const id = useParams<{id:string}>().id;
+  const { contacts, editContact } = useContacts();
+  const [contact, setContact] = useState<Contact | null>(null);
+ 
+
+  useEffect(() => {
+    if (!id) return;
+    const foundContact = contacts.find(c => c.id === id);
+    setContact(foundContact || null);
+  }, [id, contacts]);
+
+  const handleEditContact = async (editedContact: Contact) => {
+    if (!id) return;
+    await editContact(id, editedContact);
+    setContact(editedContact); // Update the local state with edited data
+  };
 
   if (!contact) {
     console.log(... contacts);
@@ -19,7 +35,9 @@ const ContactCardPage = () => {
   return (
     <div>
       <h1>Contact Details</h1>
-      <ContactCard contact={contact} />
+      <div className='contact-details'>
+        <ContactCard contact={contact} onEdit={handleEditContact} />
+      </div>
     </div>
   );
 };
