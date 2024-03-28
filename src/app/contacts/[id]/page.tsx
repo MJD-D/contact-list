@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useParams,} from 'next/navigation';
+import { useParams} from 'next/navigation';
 import useContacts from '../../stateHooks/UseContacts';
 import ContactCard from '../../components/ContactCard';
 import  '../../styles/contactCard.module.css';
@@ -9,7 +9,7 @@ import { Contact } from '@/app/contact';
 
 
 const ContactCardPage = () => {
-  const id = useParams<{id:string}>().id;
+  const {id} = useParams<{id:string}>();
   const { contacts, editContact } = useContacts();
   const [contact, setContact] = useState<Contact | null>(null);
  
@@ -26,9 +26,7 @@ const ContactCardPage = () => {
     setContact(editedContact); // Update the local state with edited data
   };
 
-  if (!contact) {
-    console.log(... contacts);
-    
+  if (!contact) {    
     return <div>Contact not found!</div>;
   }
 
