@@ -3,19 +3,18 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useContacts from '../stateHooks/UseContacts';
-import { Contact } from '../contact';
+import { NewContact } from '../contact';
 
 const AddContactPage = () => {
   const router = useRouter();
   const { addContact } = useContacts();
-  const [newContact, setNewContact] = useState<Contact>({
+  const [newContact, setNewContact] = useState<NewContact>({
     createdAt: '',
     name: '',
     avatar: '',
     email: '',
     phone: '',
-    birthday: '',
-    id: '',
+    birthday: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

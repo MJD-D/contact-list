@@ -7,3 +7,5 @@ export interface Contact {
     birthday: string;
     id: string;
 }
+
+export interface NewContact extends Omit<Contact, 'id'>{}
